@@ -29,4 +29,5 @@ INTEGRANTES:
 - SANTIAGO TERAN LLUMIQUINGA - s.teran@alumnos.urjc.es
 
 Repositorio GitHub: https://github.com/hesfat/ssdd
+
 Gestión de Tareas: https://trello.com/b/C84FFr7y/ssdd-practica

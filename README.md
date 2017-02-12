@@ -1,21 +1,32 @@
 # ssdd
 Web para diseñar actividades turísticas (URJC)
 
-Web para la gestión de distintas actividades turisticas de una ciudad.
+DESCRIPCIÓN: Web para la gestión de distintas actividades turisticas de una ciudad.
 
-USUARIO:
+ENTIDADES PRINCIPALES:
+
+Usuario: Quien gestiona su actividad turistica y sus amigos, que pueden ser públicos o privados 
  - Tiene amigos 
  - Crea comentarios 
  - Puede valor una activadad
  - Crear atracciones 
  
-ATRACCIÓN:
+Atracción: Creadas por los usuarios, que pueden hacerlas públicas o solo para amigos (pública ó privada)
  - Son creadas por usuarios
  - Tiene comentarios
  - Tiene valoraciones
  
-COMENTARIOS:
+Comentarios: A cada actividad se le pueden asignar comentarios (pública)
  - Pertenece a una actividad
  
-VALORACIÓN:
+Valoración: A cada actividad se le pueden asignar valoraciones (pública)
  - Pertenece a una actividad
+
+INTEGRANTES:
+
+- HECTOR ARRANZ LANCHA - h.arranz@alumnos.urjc.es
+- EDUARDO	FERNANDEZ CARRION - e.fernandezcarr@alumnos.urjc.es
+- SANTIAGO TERAN LLUMIQUINGA - s.teran@alumnos.urjc.es
+
+Repositorio GitHub: https://github.com/hesfat/ssdd
+Gestión de Tareas: https://trello.com/b/C84FFr7y/ssdd-practica

@@ -1,0 +1,16 @@
+<html>
+<body>
+	<h1>Usuarios</h1>
+	{{#usuarios}}
+	<table>
+	<tr>
+	<td>{{-index}}</td>
+	<td><a href="usuario/{{id}}">{{nombre}} {{apellidos}}</a></td>
+	<td><a href="usuario/{{id}}/editar">Editar</a></td>
+	
+	</tr>
+	</table>
+	{{/usuarios}}    
+	<a href="alta_usuario.html">Nuevo usuario</a>
+</body>
+</html></html>

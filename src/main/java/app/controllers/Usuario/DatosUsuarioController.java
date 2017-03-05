@@ -73,6 +73,12 @@ return "mostrar_usuarios_template";
 		return "editar_usuario_template";
 	}
 	
+	@GetMapping("/usuario/{id}/eliminar")
+	public String eliminarUsuario(Model model, @PathVariable long id) {
+		repository.delete(id);
+		return "redirect:/";
+	}
+	
 	
 	
 }

@@ -1,4 +1,4 @@
-package app.controllers.Usuario;
+package app.controllers;
 
 import java.util.Date;
 
@@ -19,22 +19,45 @@ public class DatosUsuarioController {
  
 @Autowired
 private UsuariosRepository repository;
- 
-	
+
+private String nombreUsuario;
+
 @PostConstruct
  public void init() {
-	 
- repository.save(new Usuario("Pepe", "Apellido 1", new Date()));
- repository.save(new Usuario("Juan", "Apellido 2", new Date()));
+	 	
+ repository.save(new Usuario("Pepe", "Apellido 1","pass", new Date()));
+ repository.save(new Usuario("Juan", "Apellido 2", "pass", new Date()));
  }
  
- @GetMapping("/")
+@GetMapping("/") 
+public String inicio(Model model) {
+	 return "Inicio.html";
+}
+
+@PostMapping("/login") 
+public String login(Model model, Usuario usuario) {
+	usuario = repository.findByNombreInAndPasswordIn(usuario.getNombre(), usuario.getPassword());
+	nombreUsuario = usuario.getNombre();
+	
+	return "usuario_logado_template";
+}
+
+
+@GetMapping("/usuarios")
  public String listadoUsuarios(Model model) {
 	 model.addAttribute("usuarios", repository.findAll());
 return "mostrar_usuarios_template";
  }
+ 
+ 
+ 
+ @GetMapping("usuarios/alta")
+ 	public String altaUsuario(Model model) {
+	 return "alta_usuario_template";
+ }
+  
 	
- @PostMapping("/usuario/nuevo")
+ @PostMapping("/usuarios/nuevo")
 	public String nuevoUsuario(Model model, Usuario usuario) {
 	 
 		repository.save(usuario);
@@ -43,7 +66,7 @@ return "mostrar_usuarios_template";
 
 	}
  
- @PostMapping("/usuario/editar")
+ @PostMapping("/usuarios/editar")
 	public String editarUsuario(Model model, Usuario usuario) {
 
 		repository.save(usuario);
@@ -53,7 +76,7 @@ return "mostrar_usuarios_template";
 	}
  
  
-	@GetMapping("/usuario/{id}")
+	@GetMapping("/usuarios/{id}")
 	public String verUsuario(Model model, @PathVariable long id) {
 
 		Usuario usuario= repository.findOne(id);
@@ -63,7 +86,7 @@ return "mostrar_usuarios_template";
 		return "ver_usuario_template";
 	}
 	
-	@GetMapping("/usuario/{id}/editar")
+	@GetMapping("/usuarios/{id}/editar")
 	public String editarUsuario(Model model, @PathVariable long id) {
 
 		Usuario usuario= repository.findOne(id);
@@ -73,7 +96,7 @@ return "mostrar_usuarios_template";
 		return "editar_usuario_template";
 	}
 	
-	@GetMapping("/usuario/{id}/eliminar")
+	@GetMapping("/usuarios/{id}/eliminar")
 	public String eliminarUsuario(Model model, @PathVariable long id) {
 		repository.delete(id);
 		return "redirect:/";

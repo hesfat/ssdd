@@ -7,23 +7,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.web.context.annotation.SessionScope;
+
 
 @Entity
+@SessionScope
 public class Usuario {
 @Id
 @GeneratedValue(strategy = GenerationType.AUTO)
 private long id;
 private String nombre;
 private String apellidos;
+private String password;
 private Date fechaAlta;
 
 public Usuario() {
 }
 
-public Usuario(String nombre, String apellidos, Date fechaAlta) {
+public Usuario(String nombre, String apellidos, String password, Date fechaAlta) {
 	this.nombre = nombre;
 	this.apellidos = apellidos;
 	this.fechaAlta = fechaAlta;
+	this.password = password;
 }
 
 public long getId() {
@@ -52,6 +57,14 @@ public Date getFechaAlta() {
 }
 public void setFechaAlta(Date fechaAlta) {
 	this.fechaAlta = fechaAlta;
+}
+
+public String getPassword() {
+	return password;
+}
+
+public void setPassword(String password) {
+	this.password = password;
 }
 
 }

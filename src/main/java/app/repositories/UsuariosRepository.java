@@ -6,5 +6,7 @@ import app.entities.Usuario;
 
 
 public interface UsuariosRepository extends JpaRepository<Usuario, Long> {
-
+	
+	public Usuario findByNombreInAndPasswordIn(String nombre, String password);
+	
 }

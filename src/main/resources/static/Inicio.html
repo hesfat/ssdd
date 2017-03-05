@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Bienvenido</title>
+</head>
+<style>
+table{
+border: 1px solid black;
+}
+td{
+border: 1px solid black;
+}
+</style>
+<body>
+<table>
+<tr>
+<td>
+	<p>Usuario registrado</p>
+	<form action="login" method="post">
+		<p>Nombre: </p>
+		<input type='text' name='nombre'/>
+		<p>Password:</p>
+		<input type='text' name='password'/>
+		<input type='submit' value='Enviar'/>
+	</form>
+</td>
+<td>
+	<a href ="/usuarios/alta/" >Nuevo usuario</a>
+	</td>
+
+<td>
+	<a href ="/usuarios/" >Ver usuarios</a>
+</tr>
+
+</table>
+</body>
+</html>

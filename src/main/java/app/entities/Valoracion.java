@@ -12,40 +12,33 @@ import org.springframework.web.context.annotation.SessionScope;
 
 @Entity
 @SessionScope
-public class Comentarios {
-
-
+public class Valoracion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private long idCreador;
 	private long idActividad;
-	private String texto;
+	private int valoracion;
 	private Date fechaAlta;
-	private Date fechaBaja;
 	
-	
-	public Comentarios(long idCreador, long idActividad, String texto, Date fechaAlta, Date fechaBaja) {
-		
-		this.idCreador = idCreador;
-		this.idActividad = idActividad;
-		this.texto = texto;
-		this.fechaAlta = fechaAlta;
-		this.fechaBaja = fechaBaja;
+	public Valoracion(){
 	}
 	
-	public Comentarios(long id, long idCreador, long idActividad, String texto, Date fechaAlta, Date fechaBaja) {
+	
+	public Valoracion(long id, long idCreador, long idActividad, int valoracion, Date fechaAlta) {
 		this.id = id;
 		this.idCreador = idCreador;
 		this.idActividad = idActividad;
-		this.texto = texto;
+		this.valoracion = valoracion;
 		this.fechaAlta = fechaAlta;
-		this.fechaBaja = fechaBaja;
 	}
 	
-	public Comentarios() {
+	public Valoracion(long idCreador, long idActividad, int valoracion, Date fechaAlta) {
+		this.idCreador = idCreador;
+		this.idActividad = idActividad;
+		this.valoracion = valoracion;
+		this.fechaAlta = fechaAlta;
 	}
-	
 	
 	public long getId() {
 		return id;
@@ -65,11 +58,11 @@ public class Comentarios {
 	public void setIdActividad(long idActividad) {
 		this.idActividad = idActividad;
 	}
-	public String getTexto() {
-		return texto;
+	public int getValoracion() {
+		return valoracion;
 	}
-	public void setTexto(String texto) {
-		this.texto = texto;
+	public void setValoracion(int valoracion) {
+		this.valoracion = valoracion;
 	}
 	public Date getFechaAlta() {
 		return fechaAlta;
@@ -77,12 +70,8 @@ public class Comentarios {
 	public void setFechaAlta(Date fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
-	public Date getFechaBaja() {
-		return fechaBaja;
-	}
-	public void setFechaBaja(Date fechaBaja) {
-		this.fechaBaja = fechaBaja;
-	}
+	
+	
 	
 	
 }

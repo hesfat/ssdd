@@ -9,6 +9,7 @@ import app.entities.Comentarios;
 
 
 public interface ComentariosRepository extends JpaRepository<Comentarios, Long> {
-	public List<Comentarios> findById(Long id);
+
+	public List<Comentarios> findAllByIdActividad(long id);
 	
 }

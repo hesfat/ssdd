@@ -13,10 +13,9 @@ border: 1px solid black;
 }
 </style>
 <body>
-<table>
-<tr>
-<td>
-	<p>Usuario registrado</p>
+	{{^usuarioSesion}}
+	<p>Usuario registrado </p>
+
 	<form action="login" method="post">
 		<p>Nombre: </p>
 		<input type='text' name='nombre'/>
@@ -24,11 +23,18 @@ border: 1px solid black;
 		<input type='text' name='password'/>
 		<input type='submit' value='Enviar'/>
 	</form>
-</td>
-<td>
-	<a href ="/usuarios/alta/" >Nuevo usuario</a>
-	</td>
+	<p>
+		<a href ="/usuarios/alta/" >Nuevo usuario</a>
+		</p>
+	{{/usuarioSesion}}
+
 {{#usuarioSesion}}
+<p>
+Bienvenido {{usuarioSesion.nombre}}
+
+</p>
+<table>
+<tr>
 <td>
 	<a href ="/usuarios/" >Ver usuarios</a>
 	</td>
@@ -39,10 +45,11 @@ border: 1px solid black;
 <td>
 	<a href ="/actividades" >Ver actividades</a>
 	</td>
-{{/usuarioSesion}}
+
 </tr>
 
 
 </table>
+{{/usuarioSesion}}
 </body>
 </html>

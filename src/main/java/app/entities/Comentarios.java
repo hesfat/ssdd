@@ -12,27 +12,29 @@ import org.springframework.web.context.annotation.SessionScope;
 
 @Entity
 @SessionScope
-public class Actividad {
+public class Comentarios {
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private long idCreador;
-	private String nombre;
-	private String descripcion;
+	private long idActividad;
+	private String texto;
 	private Date fechaAlta;
 	private Date fechaBaja;
 	
 	
-	public Actividad(long idCreador, String nombre, String descripcion, Date fechaAlta, Date fechaBaja) {
+	public Comentarios(long idCreador, long idActividad, String texto, Date fechaAlta, Date fechaBaja) {
 		super();
 		this.idCreador = idCreador;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
+		this.idActividad = idActividad;
+		this.texto = texto;
 		this.fechaAlta = fechaAlta;
 		this.fechaBaja = fechaBaja;
 	}
 	
-	public Actividad() {
+	public Comentarios() {
 	}
 	
 	
@@ -48,17 +50,17 @@ public class Actividad {
 	public void setIdCreador(long idCreador) {
 		this.idCreador = idCreador;
 	}
-	public String getNombre() {
-		return nombre;
+	public long getIdActividad() {
+		return idActividad;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setIdActividad(long idActividad) {
+		this.idActividad = idActividad;
 	}
-	public String getDescripcion() {
-		return descripcion;
+	public String getTexto() {
+		return texto;
 	}
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setTexto(String texto) {
+		this.texto = texto;
 	}
 	public Date getFechaAlta() {
 		return fechaAlta;

@@ -67,6 +67,7 @@ public String inicio(Model model) {
 @PostMapping("/login") 
 public String login(Model model, Usuario usuario) {
 	usuario = repository.findByNombreInAndPasswordIn(usuario.getNombre(), usuario.getPassword());
+	model.addAttribute("usuario",usuario);
 	httpSession.setAttribute("usuarioSesion", usuario);
 	return "usuario_logado_template";
 }

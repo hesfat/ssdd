@@ -1,8 +1,11 @@
 package app.entities;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +24,9 @@ private String apellidos;
 private String password;
 private Date fechaAlta;
 
+@ElementCollection(fetch = FetchType.EAGER)
+private List<String> roles;
+
 public Usuario() {
 }
 
@@ -29,6 +35,14 @@ public Usuario(String nombre, String apellidos, String password, Date fechaAlta)
 	this.apellidos = apellidos;
 	this.fechaAlta = fechaAlta;
 	this.password = password;
+}
+
+public List<String> getRoles() {
+	return roles;
+}
+
+public void setRoles(List<String> roles) {
+	this.roles = roles;
 }
 
 public long getId() {

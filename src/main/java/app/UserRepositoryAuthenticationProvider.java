@@ -41,9 +41,9 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
  return new UsernamePasswordAuthenticationToken(user.getNombre(), password, roles);
  }
 
-@Override
-public boolean supports(Class<?> arg0) {
-	// TODO Auto-generated method stub
-	return false;
-}
+ @Override
+ public boolean supports(Class<?> authentication) {
+     return authentication.equals(
+       UsernamePasswordAuthenticationToken.class);
+ }
 }

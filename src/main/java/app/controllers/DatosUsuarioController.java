@@ -7,7 +7,10 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -209,4 +212,21 @@ return "mostrar_usuarios_template";
 	
 	//endregion
 	
+		 
+			//for 403 access denied page
+			@GetMapping("/403")
+			public String accesssDenied(Model model, @PathVariable long id, @PathVariable long idUsuario, @PathVariable long idValoracion, @PathVariable int valor) {
+
+			  //check if user is login
+			  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			  if (!(auth instanceof AnonymousAuthenticationToken)) {
+				UserDetails userDetail = (UserDetails) auth.getPrincipal();
+			  }
+
+			 
+			  return "usuario_no_logado";
+
+			}
+			
+			
 }

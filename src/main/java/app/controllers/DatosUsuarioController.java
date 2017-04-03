@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,8 +52,11 @@ private HttpSession httpSession;
 @PostConstruct
  public void init() {
 	 	
- repository.save(new Usuario("Pepe", "Apellido 1","pass", new Date()));
- repository.save(new Usuario("Juan", "Apellido 2", "pass", new Date()));
+	BCryptPasswordEncoder Codificador = new  BCryptPasswordEncoder();
+	
+	
+ repository.save(new Usuario("Pepe", "Apellido 1", Codificador.encode("pass"), new Date()));
+ repository.save(new Usuario("Juan", "Apellido 2", Codificador.encode("pass"), new Date()));
  repositoryA.save(new Actividad(1, "Título de la actividad", "Descripción de la actividad", new Date(), new Date()));
  repositoryA.save(new Actividad(1, "C", "D", new Date(), new Date())); 
  repositoryC.save(new Comentarios(1,1,"Comentario 1", new Date(), null));
@@ -71,6 +76,7 @@ public String inicio(Model model) {
 
 @PostMapping("/login") 
 public String login(Model model, Usuario usuario) {
+	
 	usuario = repository.findByNombreInAndPasswordIn(usuario.getNombre(), usuario.getPassword());
 	model.addAttribute("usuario",usuario);
 	httpSession.setAttribute("usuarioSesion", usuario);
@@ -95,7 +101,11 @@ return "mostrar_usuarios_template";
 	
  @PostMapping("/usuarios/nuevo")
 	public String nuevoUsuario(Model model, Usuario usuario) {
-	 
+		BCryptPasswordEncoder Codificador = new  BCryptPasswordEncoder();
+	 usuario.setPassword(Codificador.encode(usuario.getPassword()));
+	 	List<String> roles = new ArrayList<String>();
+	 	roles.add("ROLE_USER");
+		usuario.setRoles(roles);
 		repository.save(usuario);
 
 		return "usuario_guardado_template";

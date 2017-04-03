@@ -29,10 +29,10 @@ public UserRepositoryAuthenticationProvider authenticationProvider;
  http.authorizeRequests().anyRequest().authenticated();
  
  // Login form
- http.formLogin().loginPage("/login");
- http.formLogin().usernameParameter("username");
+ http.formLogin().loginPage("/");
+ http.formLogin().usernameParameter("nombre");
  http.formLogin().passwordParameter("password");
- http.formLogin().defaultSuccessUrl("/home");
+ http.formLogin().defaultSuccessUrl("/");
  http.formLogin().failureUrl("/loginerror");
  
  // Logout

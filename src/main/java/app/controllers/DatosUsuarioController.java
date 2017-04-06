@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,12 +54,9 @@ private HttpSession httpSession;
 @PostConstruct
  public void init() {
 	 	
-	BCryptPasswordEncoder Codificador = new  BCryptPasswordEncoder();
 	
-	
- repository.save(new Usuario("Pepe", "Apellido 1", Codificador.encode("pass"), new Date()));
- repository.save(new Usuario("Juan", "Apellido 2", Codificador.encode("pass"), new Date()));
- repositoryA.save(new Actividad(1, "Título de la actividad", "Descripción de la actividad", new Date(), new Date()));
+
+  repositoryA.save(new Actividad(1, "Título de la actividad", "Descripción de la actividad", new Date(), new Date()));
  repositoryA.save(new Actividad(1, "C", "D", new Date(), new Date())); 
  repositoryC.save(new Comentarios(1,1,"Comentario 1", new Date(), null));
  repositoryC.save(new Comentarios(1,1,"Comentario 2", new Date(), null));
@@ -70,17 +69,28 @@ private HttpSession httpSession;
 
 @GetMapping("/") 
 public String inicio(Model model) {
-	model.addAttribute("usuarioSesion",(Usuario)httpSession.getAttribute("usuarioSesion"));
-	 return "Inicio_template";
+	
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	
+	//model.addAttribute("usuario",usuario);
+	//model.addAttribute("usuarioSesion",(Usuario)httpSession.getAttribute("usuarioSesion"));
+	 
+	return "Inicio_template";
 }
 
-@PostMapping("/login") 
-public String login(Model model, Usuario usuario) {
-	
-	usuario = repository.findByNombreInAndPasswordIn(usuario.getNombre(), usuario.getPassword());
-	model.addAttribute("usuario",usuario);
-	httpSession.setAttribute("usuarioSesion", usuario);
-	return "usuario_logado_template";
+@GetMapping("/login") 
+public String login(Model model) {
+	return "login_template";
+}
+
+@GetMapping("/loginerror") 
+public String loginerror(Model model) {
+	return "login_error_template";
+}
+
+@GetMapping("/logout") 
+public String logout(Model model) {
+	return "logout_template";
 }
 
 //region Usuarios
@@ -102,9 +112,9 @@ return "mostrar_usuarios_template";
  @PostMapping("/usuarios/nuevo")
 	public String nuevoUsuario(Model model, Usuario usuario) {
 		BCryptPasswordEncoder Codificador = new  BCryptPasswordEncoder();
-	 usuario.setPassword(Codificador.encode(usuario.getPassword()));
+	 usuario.setPasswordHash(Codificador.encode(usuario.getPasswordHash()));
 	 	List<String> roles = new ArrayList<String>();
-	 	roles.add("ROLE_USER");
+	 	roles.add("USER");
 		usuario.setRoles(roles);
 		repository.save(usuario);
 

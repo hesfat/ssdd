@@ -1,5 +1,7 @@
 package app.entities;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.context.annotation.SessionScope;
 
 
@@ -21,7 +24,7 @@ public class Usuario {
 private long id;
 private String nombre;
 private String apellidos;
-private String password;
+private String passwordHash;
 private Date fechaAlta;
 
 @ElementCollection(fetch = FetchType.EAGER)
@@ -30,11 +33,15 @@ private List<String> roles;
 public Usuario() {
 }
 
-public Usuario(String nombre, String apellidos, String password, Date fechaAlta) {
+
+
+public Usuario(String nombre, String apellidos, String passwordHash, Date fechaAlta, String... roles) {
+	BCryptPasswordEncoder Codificador = new  BCryptPasswordEncoder();
 	this.nombre = nombre;
 	this.apellidos = apellidos;
+	this.passwordHash = Codificador.encode(passwordHash);
 	this.fechaAlta = fechaAlta;
-	this.password = password;
+	this.roles = new ArrayList<>(Arrays.asList(roles));
 }
 
 public List<String> getRoles() {
@@ -73,12 +80,14 @@ public void setFechaAlta(Date fechaAlta) {
 	this.fechaAlta = fechaAlta;
 }
 
-public String getPassword() {
-	return password;
+public String getPasswordHash() {
+	return passwordHash;
 }
 
-public void setPassword(String password) {
-	this.password = password;
+public void setPasswordHash(String password) {
+	//BCryptPasswordEncoder Codificador = new  BCryptPasswordEncoder();
+	//this.passwordHash = Codificador.encode(password);
+	this.passwordHash = password;
 }
 
 }

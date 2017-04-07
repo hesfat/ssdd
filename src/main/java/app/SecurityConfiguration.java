@@ -28,7 +28,9 @@ public UserRepositoryAuthenticationProvider authenticationProvider;
  
  
  // Private pages (all other pages)
- http.authorizeRequests().anyRequest().permitAll();
+ 
+ http.authorizeRequests().anyRequest().hasAuthority("ROLE_ANONYMOUS").anyRequest().denyAll();
+ http.authorizeRequests().anyRequest().hasAuthority("USER").anyRequest().permitAll();
  
  // Login form
  http.formLogin().loginPage("/login");

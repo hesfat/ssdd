@@ -69,9 +69,10 @@ private HttpSession httpSession;
 
 @GetMapping("/") 
 public String inicio(Model model) {
-	
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	
+	if (!(auth instanceof AnonymousAuthenticationToken)) {
+		model.addAttribute("usuarioSesion",(Usuario)auth.getPrincipal());
+	}
 	//model.addAttribute("usuario",usuario);
 	//model.addAttribute("usuarioSesion",(Usuario)httpSession.getAttribute("usuarioSesion"));
 	 

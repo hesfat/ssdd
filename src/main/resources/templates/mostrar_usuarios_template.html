@@ -7,8 +7,9 @@
 	<td>{{-index}}</td>
 	<td><a href="{{id}}">{{nombre}} {{apellidos}}</a></td>
 	<td><a href="{{id}}/editar">Editar</a></td>
+	{{#admin}}
 	<td><a href="{{id}}/eliminar">Eliminar</a></td>
-	
+	{{/admin}}
 	</tr>
 	</table>
 	{{/usuarios}}    

@@ -2,16 +2,16 @@
 <body>
 	<h1>Actividad {{actividad.nombre}}</h1>
 	<p>{{actividad.descripcion}}</p>
-	{{#valoracion}}<p>Valoración: {{valoracion.valoracion}} Estrellas</p>{{/valoracion}}
+	{{#valoracion}}<p>Valoración: {{valoracion}} Estrellas</p>{{/valoracion}}
 	{{^valoracion}}<p>Sin valorar</p>{{/valoracion}}
 	<table>
 	<tr>
 	{{#valoracion}}
-	<td><a href="{{actividad.id}}/{{usuario.id}}/{{valoracion.id}}/1">1 Estrella</a></td>
-	<td><a href="{{actividad.id}}/{{usuario.id}}/{{valoracion.id}}/2">2 Estrella</a></td>
-	<td><a href="{{actividad.id}}/{{usuario.id}}/{{valoracion.id}}/3">3 Estrella</a></td>
-	<td><a href="{{actividad.id}}/{{usuario.id}}/{{valoracion.id}}/4">4 Estrella</a></td>
-	<td><a href="{{actividad.id}}/{{usuario.id}}/{{valoracion.id}}/5">5 Estrella</a></td>
+	<td><a href="{{actividad.id}}/{{usuario.id}}/{{id}}/1">1 Estrella</a></td>
+	<td><a href="{{actividad.id}}/{{usuario.id}}/{{id}}/2">2 Estrella</a></td>
+	<td><a href="{{actividad.id}}/{{usuario.id}}/{{id}}/3">3 Estrella</a></td>
+	<td><a href="{{actividad.id}}/{{usuario.id}}/{{id}}/4">4 Estrella</a></td>
+	<td><a href="{{actividad.id}}/{{usuario.id}}/{{id}}/5">5 Estrella</a></td>
 	{{/valoracion}}
 	{{^valoracion}}
 	<td><a href="{{actividad.id}}/{{usuario.id}}/0/1">1 Estrella</a></td>

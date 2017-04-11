@@ -18,19 +18,28 @@ public UserRepositoryAuthenticationProvider authenticationProvider;
  protected void configure(HttpSecurity http) throws Exception {
 	 
  // Public pages
- http.authorizeRequests().antMatchers("/").permitAll();
- http.authorizeRequests().antMatchers("/login").permitAll();
- http.authorizeRequests().antMatchers("/loginerror").permitAll();
- http.authorizeRequests().antMatchers("/logout").permitAll();
- http.authorizeRequests().antMatchers("/usuarios/alta/").permitAll();
- http.authorizeRequests().antMatchers("/usuarios/nuevo").permitAll();
+ http.authorizeRequests().antMatchers("/").permitAll()
+ .antMatchers("/login").permitAll()
+ .antMatchers("/loginerror").permitAll()
+ .antMatchers("/logout").permitAll()
+ .antMatchers("/usuarios/alta/").permitAll()
+ .antMatchers("/usuarios/nuevo").permitAll()
+ .antMatchers("/**").hasRole("USER").anyRequest().permitAll()
+ .antMatchers("/**").hasAuthority("USER").anyRequest().permitAll()
+ .anyRequest().denyAll();
+ //.antMatchers("/**").hasRole("USER").anyRequest().permitAll()
+ //.antMatchers("/**").hasAuthority("USER").anyRequest().permitAll();
  
- 
+ //.antMatchers("/**").hasRole("USER").anyRequest().authenticated();
+ //http.authorizeRequests().anyRequest().denyAll();
+ //http.authorizeRequests().anyRequest().denyAll();
+
+
  
  // Private pages (all other pages)
  
- http.authorizeRequests().anyRequest().hasAuthority("ROLE_ANONYMOUS").anyRequest().denyAll();
- http.authorizeRequests().anyRequest().hasAuthority("USER").anyRequest().permitAll();
+ //http.authorizeRequests().anyRequest().hasAuthority("ANONYMOUS").anyRequest().denyAll();
+ 
  
  // Login form
  http.formLogin().loginPage("/login");

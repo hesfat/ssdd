@@ -1,17 +1,24 @@
 package app.controllers;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -97,8 +104,13 @@ public String logout(Model model) {
 //region Usuarios
 
 @GetMapping("/usuarios")
- public String listadoUsuarios(Model model) {
+ public String listadoUsuarios(Model model, HttpServletRequest request, HttpServletResponse response) {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
 	 model.addAttribute("usuarios", repository.findAll());
+
+	 model.addAttribute("admin", auth.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")));
+	 
 return "mostrar_usuarios_template";
  }
  
@@ -186,7 +198,8 @@ return "mostrar_usuarios_template";
 	 
 		@GetMapping("/actividad/{id}")
 		public String verActividad(Model model, @PathVariable long id) {
-			Usuario usuario = (Usuario) httpSession.getAttribute("usuarioSesion");
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			Usuario usuario = (Usuario) auth.getPrincipal();
 			Actividad actividad = repositoryA.findOne(id);
 			List<Comentarios> comentarios = repositoryC.findAllByIdActividad(id);
 			Valoracion valoracion = repositoryV.findByIdCreadorInAndIdActividadIn(usuario.getId(), id);

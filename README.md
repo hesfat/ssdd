@@ -1,6 +1,5 @@
 # ssdd
 
-Prueba
 Web para diseñar actividades turísticas (URJC)
 
 DESCRIPCIÓN: Web para la gestión de distintas actividades turisticas de una ciudad.
@@ -33,3 +32,7 @@ INTEGRANTES:
 Repositorio GitHub: https://github.com/hesfat/ssdd
 
 Gestión de Tareas: https://trello.com/b/C84FFr7y/ssdd-practica
+
+Diagrama de Navegación: https://github.com/hesfat/ssdd/blob/master/Navegaci%C3%B3n.pptx
+
+Diagrama UML: https://github.com/hesfat/ssdd/blob/master/Modelo.pdf

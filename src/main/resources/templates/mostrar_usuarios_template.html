@@ -6,14 +6,16 @@
 	<tr>
 	<td>{{-index}}</td>
 	<td><a href="{{id}}">{{nombre}} {{apellidos}}</a></td>
-	<td><a href="{{id}}/editar">Editar</a></td>
 	{{#admin}}
+	<td><a href="{{id}}/editar">Editar</a></td>
 	<td><a href="{{id}}/eliminar">Eliminar</a></td>
 	{{/admin}}
 	</tr>
 	</table>
-	{{/usuarios}}    
+	{{#admin}}
 	<a href="/usuarios/alta/">Nuevo usuario</a>
+	{{/admin}}
+	{{/usuarios}}    
 	<p><a href="/">Volver al inicio</a></p>
 </body>
 </html></html>

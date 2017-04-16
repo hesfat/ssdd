@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -108,7 +109,6 @@ public String logout(Model model) {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 	 model.addAttribute("usuarios", repository.findAll());
-
 	 model.addAttribute("admin", auth.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")));
 	 
 return "mostrar_usuarios_template";
@@ -166,8 +166,14 @@ return "mostrar_usuarios_template";
 	
 	@GetMapping("/usuarios/{id}/eliminar")
 	public String eliminarUsuario(Model model, @PathVariable long id) {
-		repository.delete(id);
-		return "redirect:/";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		 if(auth.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))){
+			 repository.delete(id);
+			 return "redirect:/";
+		 }else{
+			 return "/accionerror_template";
+		 }
+		
 	}
 	
 	//endregion

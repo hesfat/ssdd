@@ -18,8 +18,11 @@
 </parent>
 
 <properties>
+     <start-class>app.App</start-class>  
 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 <java.version>1.8</java.version>
+<global-method-security pre-post-annotations="enabled"/>
+<springsecurity.version>4.0.1.RELEASE</springsecurity.version>
 </properties>
 
   <dependencies>
@@ -52,6 +55,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				            <configuration>
+                <mainClass>app.App</mainClass>
+            </configuration>
 			</plugin>
 		</plugins>
 	</build>

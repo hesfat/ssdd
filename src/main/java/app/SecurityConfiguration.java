@@ -24,6 +24,12 @@ public UserRepositoryAuthenticationProvider authenticationProvider;
  .antMatchers("/logout").permitAll()
  .antMatchers("/usuarios/alta/").permitAll()
  .antMatchers("/usuarios/nuevo").permitAll()
+ .antMatchers("/**").hasRole("ADMIN").anyRequest().permitAll()
+ .antMatchers("/**").hasAuthority("ADMIN").anyRequest().permitAll()
+ .antMatchers("/usuarios/*/eliminar").hasRole("USER").anyRequest().denyAll()
+ .antMatchers("/usuarios/*/eliminar").hasAuthority("USER").anyRequest().denyAll()
+ .antMatchers("**eliminar").hasRole("USER").anyRequest().denyAll()
+ .antMatchers("**eliminar").hasAuthority("USER").anyRequest().denyAll()
  .antMatchers("/**").hasRole("USER").anyRequest().permitAll()
  .antMatchers("/**").hasAuthority("USER").anyRequest().permitAll()
  .anyRequest().denyAll();

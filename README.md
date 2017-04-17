@@ -36,3 +36,7 @@ Gestión de Tareas: https://trello.com/b/C84FFr7y/ssdd-practica
 Diagrama de Navegación: https://github.com/hesfat/ssdd/blob/master/Navegaci%C3%B3n.pptx
 
 Diagrama UML: https://github.com/hesfat/ssdd/blob/master/Modelo.pdf
+
+Instalación en AZURE: https://github.com/hesfat/ssdd/blob/master/Instalar%20Aplicacion.docx
+
+URL: https://ssdd.cloudapp.net:8443/

@@ -37,6 +37,8 @@ Diagrama de Navegación: https://github.com/hesfat/ssdd/blob/master/Navegaci%C3%
 
 Diagrama UML: https://github.com/hesfat/ssdd/blob/master/Modelo.pdf
 
-Instalación en AZURE: https://github.com/hesfat/ssdd/blob/master/Instalar%20Aplicacion.docx
+Instalación en AZURE (LINUX): https://github.com/hesfat/ssdd/blob/master/AZURE%20DESPLIEGUE_UBUNTU.pdf
+
+Instalación en AZURE (WINDOWS): https://github.com/hesfat/ssdd/blob/master/Instalar%20Aplicacion.docx
 
 URL: https://ssdd.cloudapp.net:8443/

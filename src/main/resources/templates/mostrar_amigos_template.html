@@ -1,0 +1,18 @@
+<html>
+<body>
+	<h1>Amigos de: {{usuario.nombre}} {{usuario.apellidos}}</h1>
+	<table>
+	{{#amigos}}
+	<tr>
+	<!-- <td>{{-index}}</td> -->
+	<td>{{nombre}} {{apellidos}}</td>
+	<td>
+	<a href="/amigos/eliminar/{{usuario.id}}/{{id}}">Eliminar amigo</a>
+	</td>
+	{{/amigos}}
+	</tr>
+	</table>    
+	<p><a href="/">Volver al inicio</a></p>
+</body>
+</html>
+</html>

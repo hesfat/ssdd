@@ -5,12 +5,16 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.context.annotation.SessionScope;
@@ -18,8 +22,11 @@ import org.springframework.web.context.annotation.SessionScope;
 
 @Entity
 @SessionScope
+@Table(name = "USUARIO")
 public class Usuario {
+	
 @Id
+@Column(name = "IdUsuario")
 @GeneratedValue(strategy = GenerationType.AUTO)
 private long id;
 private String nombre;
@@ -33,7 +40,16 @@ private List<String> roles;
 public Usuario() {
 }
 
+@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+private List<Amigo> amigos;
 
+public List<Amigo> getAmigos() {
+    return amigos;
+}
+
+public void setAmigos(List<Amigo> amigos) {
+    this.amigos = amigos;
+}
 
 public Usuario(String nombre, String apellidos, String passwordHash, Date fechaAlta, String... roles) {
 	BCryptPasswordEncoder Codificador = new  BCryptPasswordEncoder();

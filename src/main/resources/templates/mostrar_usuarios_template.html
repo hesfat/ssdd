@@ -1,8 +1,8 @@
 <html>
 <body>
 	<h1>Usuarios</h1>
-	{{#usuarios}}
 	<table>
+	{{#usuarios}}
 	<tr>
 	<td>{{-index}}</td>
 	<td><a href="{{id}}">{{nombre}} {{apellidos}}</a></td>
@@ -10,12 +10,16 @@
 	<td><a href="{{id}}/editar">Editar</a></td>
 	<td><a href="{{id}}/eliminar">Eliminar</a></td>
 	{{/admin}}
+	<td>
+	<a href="/amigos/{{usuario.id}}/{{id}}">Añadir como amigo</a>
+	</td>
 	</tr>
+	{{/usuarios}}  
 	</table>
 	{{#admin}}
 	<a href="/usuarios/alta/">Nuevo usuario</a>
 	{{/admin}}
-	{{/usuarios}}    
+	  
 	<p><a href="/">Volver al inicio</a></p>
 </body>
 </html></html>

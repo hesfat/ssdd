@@ -31,10 +31,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import app.UserRepositoryAuthenticationProvider;
 import app.entities.Actividad;
+import app.entities.Amigo;
 import app.entities.Comentarios;
 import app.entities.Usuario;
 import app.entities.Valoracion;
 import app.repositories.ActividadesRepository;
+import app.repositories.AmigoRepository;
 import app.repositories.ComentariosRepository;
 import app.repositories.UsuariosRepository;
 import app.repositories.ValoracionRepository;
@@ -53,6 +55,9 @@ private ComentariosRepository repositoryC;
 
 @Autowired
 private ValoracionRepository repositoryV;
+
+@Autowired
+private AmigoRepository repositoryAmigo;
 
 @Autowired 
 private HttpSession httpSession;
@@ -107,9 +112,12 @@ public String logout(Model model) {
 @GetMapping("/usuarios")
  public String listadoUsuarios(Model model, HttpServletRequest request, HttpServletResponse response) {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
+	List<Usuario> lista = repository.findAll();
+//	List<Usuario> listaAmigos = repositoryAmigo.findAllByIdUsuario();
 	 model.addAttribute("usuarios", repository.findAll());
+	 model.addAttribute("usuario", auth.getPrincipal());
 	 model.addAttribute("admin", auth.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")));
+	 
 	 
 return "mostrar_usuarios_template";
  }
@@ -210,7 +218,6 @@ return "mostrar_usuarios_template";
 			List<Comentarios> comentarios = repositoryC.findAllByIdActividad(id);
 			Valoracion valoracion = repositoryV.findByIdCreadorInAndIdActividadIn(usuario.getId(), id);
 
-			
 			model.addAttribute("usuario", usuario);
 			model.addAttribute("comentarios", comentarios);
 			model.addAttribute("actividad", actividad);
@@ -248,8 +255,43 @@ return "mostrar_usuarios_template";
 
 			}
 		 
+		 @GetMapping("/amigos/{idUsuario}/{idAmigo}")
+			public String nuevoAmigo(Model model, @PathVariable long idUsuario, @PathVariable long idAmigo) {
+			  	
+			 if (repositoryAmigo.findByIdUsuarioInAndIdAmigoIn(idUsuario, idAmigo) == null)
+			 {
+			 
+			 Amigo amigo = new Amigo(idUsuario, idAmigo);
+			 
+				repositoryAmigo.save(amigo);
+
+				return "amigo_guardado_template";
+			 }
+			 	return "amigo_existe_template";
+			}
+		 
+		 @GetMapping("/amigos/{idUsuario}")
+			public String verAmigos(Model model, @PathVariable long idUsuario) {
+				Usuario usuario= repository.findOne(idUsuario);
+				List idsAmigos = new ArrayList<Long>();
+				for (Amigo amigo : usuario.getAmigos())
+				{
+					idsAmigos.add(amigo.getIdAmigo());
+				}
+				model.addAttribute("amigos",repository.findByIdIn(idsAmigos));
+				model.addAttribute("usuario", usuario);
+				
+				return "mostrar_amigos_template";
+
+			}
 	
-	
+		 @GetMapping("/amigos/eliminar/{idUsuario}/{idAmigo}")
+			public String eliminarAmigos(Model model, @PathVariable long idUsuario, @PathVariable long idAmigo) {
+				repositoryAmigo.deleteByIdUsuarioAndIdAmigo(idUsuario,idAmigo);
+				return "redirect:/amigos/" + idUsuario;
+
+			}
+		 
 	//endregion
 	
 		 

@@ -5,6 +5,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletException;
@@ -41,9 +42,15 @@ import app.repositories.ComentariosRepository;
 import app.repositories.UsuariosRepository;
 import app.repositories.ValoracionRepository;
 
+
 @Controller
-public class DatosUsuarioController {
- 
+public class AppController {
+
+
+@Autowired
+private AppRestController Rest;
+	
+	
 @Autowired
 private UsuariosRepository repository;
 
@@ -79,16 +86,9 @@ private HttpSession httpSession;
  
  }
 
-
-@GetMapping("/") 
+@GetMapping("/")
 public String inicio(Model model) {
-	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	if (!(auth instanceof AnonymousAuthenticationToken)) {
-		model.addAttribute("usuarioSesion",(Usuario)auth.getPrincipal());
-	}
-	//model.addAttribute("usuario",usuario);
-	//model.addAttribute("usuarioSesion",(Usuario)httpSession.getAttribute("usuarioSesion"));
-	 
+	model.addAttribute("usuarioSesion",Rest.inicio());	 
 	return "Inicio_template";
 }
 
@@ -111,18 +111,15 @@ public String logout(Model model) {
 
 @GetMapping("/usuarios")
  public String listadoUsuarios(Model model, HttpServletRequest request, HttpServletResponse response) {
-	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	List<Usuario> lista = repository.findAll();
-//	List<Usuario> listaAmigos = repositoryAmigo.findAllByIdUsuario();
-	 model.addAttribute("usuarios", repository.findAll());
-	 model.addAttribute("usuario", auth.getPrincipal());
-	 model.addAttribute("admin", auth.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")));
-	 
-	 
-return "mostrar_usuarios_template";
+	//	List<Usuario> listaAmigos = repositoryAmigo.findAllByIdUsuario();
+	 Map<String,Object> map = Rest.listadoUsuarios();
+	 model.addAttribute("usuarios", map.get("usuarios"));
+	 model.addAttribute("usuario", map.get("usuario"));
+	 model.addAttribute("admin", map.get("admin"));
+	 return "mostrar_usuarios_template";
  }
  
- 
+ /*
  
  @GetMapping("usuarios/alta")
  	public String altaUsuario(Model model) {
@@ -230,14 +227,6 @@ return "mostrar_usuarios_template";
 			public String nuevoComentario(Model model, Comentarios comentario) {
 			 comentario.setId(0);
 			 comentario.setFechaAlta(new Date());
-			 /*
-			 Comentarios c = new Comentarios();
-			 c.setIdActividad(comentario.getIdActividad());
-			 c.setIdCreador(comentario.getIdCreador());
-			 c.setTexto(comentario.getTexto());
-			 c.setFechaAlta(new Date());
-				repositoryC.save(c);
-				*/
 			 repositoryC.save(comentario);
 
 				return "actividad_guardada_template";
@@ -309,6 +298,6 @@ return "mostrar_usuarios_template";
 			  return "usuario_no_logado";
 
 			}
-			
+			*/
 			
 }

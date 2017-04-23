@@ -16,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -34,12 +36,14 @@ private String apellidos;
 private String passwordHash;
 private Date fechaAlta;
 
-@ElementCollection(fetch = FetchType.EAGER)
+@LazyCollection(LazyCollectionOption.FALSE)
+@ElementCollection(fetch = FetchType.LAZY)
 private List<String> roles;
 
 public Usuario() {
 }
 
+@LazyCollection(LazyCollectionOption.FALSE)
 @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 private List<Amigo> amigos;
 

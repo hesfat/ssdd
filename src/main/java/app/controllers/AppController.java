@@ -50,7 +50,7 @@ public class AppController {
 @Autowired
 private AppRestController Rest;
 	
-	
+/*	
 @Autowired
 private UsuariosRepository repository;
 
@@ -66,16 +66,14 @@ private ValoracionRepository repositoryV;
 @Autowired
 private AmigoRepository repositoryAmigo;
 
-@Autowired 
-private HttpSession httpSession;
-
+*/
 
 
 @PostConstruct
  public void init() {
 	 	
 	
-
+/*
   repositoryA.save(new Actividad(1, "Título de la actividad", "Descripción de la actividad", new Date(), new Date()));
  repositoryA.save(new Actividad(1, "C", "D", new Date(), new Date())); 
  repositoryC.save(new Comentarios(1,1,"Comentario 1", new Date(), null));
@@ -83,7 +81,7 @@ private HttpSession httpSession;
  repositoryC.save(new Comentarios(1,1,"Comentario 3", new Date(), null));
  repositoryV.save(new Valoracion(1,0,3, new Date()));
  repositoryV.save(new Valoracion(1,1,3, new Date()));
- 
+ */
  }
 
 @GetMapping("/")
@@ -119,7 +117,7 @@ public String logout(Model model) {
 	 return "mostrar_usuarios_template";
  }
  
- /*
+ 
  
  @GetMapping("usuarios/alta")
  	public String altaUsuario(Model model) {
@@ -134,25 +132,21 @@ public String logout(Model model) {
 	 	List<String> roles = new ArrayList<String>();
 	 	roles.add("USER");
 		usuario.setRoles(roles);
-		repository.save(usuario);
-
+		Rest.nuevoUsuario(usuario);
 		return "usuario_guardado_template";
 
 	}
  
  @PostMapping("/usuarios/editar")
 	public String editarUsuario(Model model, Usuario usuario) {
-
-		repository.save(usuario);
-
+		Rest.editarUsuario(usuario);
 		return "usuario_guardado_template";
-
 	}
  
 	@GetMapping("/usuarios/{id}")
 	public String verUsuario(Model model, @PathVariable long id) {
 
-		Usuario usuario= repository.findOne(id);
+		Usuario usuario= Rest.verUsuario(id);
 
 		model.addAttribute("usuario", usuario);
 
@@ -162,7 +156,7 @@ public String logout(Model model) {
 	@GetMapping("/usuarios/{id}/editar")
 	public String editarUsuario(Model model, @PathVariable long id) {
 
-		Usuario usuario= repository.findOne(id);
+		Usuario usuario= Rest.getUsuario(id);
 
 		model.addAttribute("usuario", usuario);
 
@@ -173,7 +167,7 @@ public String logout(Model model) {
 	public String eliminarUsuario(Model model, @PathVariable long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		 if(auth.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))){
-			 repository.delete(id);
+			 Rest.eliminarUsuario(id);
 			 return "redirect:/";
 		 }else{
 			 return "/accionerror_template";
@@ -187,7 +181,7 @@ public String logout(Model model) {
 	
 	@GetMapping("/actividades")
 	public String listadoActividades(Model model) {
-		 model.addAttribute("actividades", repositoryA.findAll());
+		 model.addAttribute("actividades", Rest.listadoActividades());
 	return "mostrar_actividades_template";
 	} 
 	
@@ -201,7 +195,7 @@ public String logout(Model model) {
 	 @PostMapping("/actividad/nuevo")
 		public String nuevaActividad(Model model, Actividad actividad) {
 		 
-			repositoryA.save(actividad);
+			Rest.nuevaActividad(actividad);
 
 			return "actividad_guardada_template";
 
@@ -211,9 +205,9 @@ public String logout(Model model) {
 		public String verActividad(Model model, @PathVariable long id) {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			Usuario usuario = (Usuario) auth.getPrincipal();
-			Actividad actividad = repositoryA.findOne(id);
-			List<Comentarios> comentarios = repositoryC.findAllByIdActividad(id);
-			Valoracion valoracion = repositoryV.findByIdCreadorInAndIdActividadIn(usuario.getId(), id);
+			Actividad actividad =  Rest.getActividad(id);
+			List<Comentarios> comentarios = Rest.getComentarios(id);
+			Valoracion valoracion = Rest.getValoracion(usuario.getId(), id);
 
 			model.addAttribute("usuario", usuario);
 			model.addAttribute("comentarios", comentarios);
@@ -227,7 +221,7 @@ public String logout(Model model) {
 			public String nuevoComentario(Model model, Comentarios comentario) {
 			 comentario.setId(0);
 			 comentario.setFechaAlta(new Date());
-			 repositoryC.save(comentario);
+			 Rest.nuevoComentario(comentario);
 
 				return "actividad_guardada_template";
 
@@ -238,21 +232,20 @@ public String logout(Model model) {
 			  	
 			 Valoracion valoracion = new Valoracion(idValoracion, idUsuario, id, valor, new Date());
 			 
-				repositoryV.save(valoracion);
-
-				return "valoracion_guardada_template";
-
+			 Rest.nuevoComentario1(valoracion);
+			 return "valoracion_guardada_template";
 			}
 		 
 		 @GetMapping("/amigos/{idUsuario}/{idAmigo}")
 			public String nuevoAmigo(Model model, @PathVariable long idUsuario, @PathVariable long idAmigo) {
 			  	
-			 if (repositoryAmigo.findByIdUsuarioInAndIdAmigoIn(idUsuario, idAmigo) == null)
+			 
+			 if (Rest.findByIdUsuarioInAndIdAmigoIn(idUsuario, idAmigo) == null)
 			 {
 			 
 			 Amigo amigo = new Amigo(idUsuario, idAmigo);
 			 
-				repositoryAmigo.save(amigo);
+				Rest.AltaAmigo(amigo);
 
 				return "amigo_guardado_template";
 			 }
@@ -261,13 +254,13 @@ public String logout(Model model) {
 		 
 		 @GetMapping("/amigos/{idUsuario}")
 			public String verAmigos(Model model, @PathVariable long idUsuario) {
-				Usuario usuario= repository.findOne(idUsuario);
+				Usuario usuario= Rest.getUsuario(idUsuario);
 				List idsAmigos = new ArrayList<Long>();
 				for (Amigo amigo : usuario.getAmigos())
 				{
 					idsAmigos.add(amigo.getIdAmigo());
 				}
-				model.addAttribute("amigos",repository.findByIdIn(idsAmigos));
+				model.addAttribute("amigos",Rest.findByIdIn(idsAmigos));
 				model.addAttribute("usuario", usuario);
 				
 				return "mostrar_amigos_template";
@@ -275,15 +268,12 @@ public String logout(Model model) {
 			}
 	
 		 @GetMapping("/amigos/eliminar/{idUsuario}/{idAmigo}")
-			public String eliminarAmigos(Model model, @PathVariable long idUsuario, @PathVariable long idAmigo) {
-				repositoryAmigo.deleteByIdUsuarioAndIdAmigo(idUsuario,idAmigo);
+			public String eliminarAmigos(Model model, @PathVariable long idUsuario, @PathVariable long idAmigo) 
+			{
+			 	Rest.eliminarAmigos(idUsuario, idAmigo);
 				return "redirect:/amigos/" + idUsuario;
-
 			}
-		 
 	//endregion
-	
-		 
 			//for 403 access denied page
 			@GetMapping("/403")
 			public String accesssDenied(Model model, @PathVariable long id, @PathVariable long idUsuario, @PathVariable long idValoracion, @PathVariable int valor) {
@@ -298,6 +288,6 @@ public String logout(Model model) {
 			  return "usuario_no_logado";
 
 			}
-			*/
+			
 			
 }

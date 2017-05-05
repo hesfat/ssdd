@@ -1,5 +1,6 @@
 package app.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -25,7 +26,7 @@ import org.springframework.web.context.annotation.SessionScope;
 @Entity
 @SessionScope
 @Table(name = "USUARIO")
-public class Usuario {
+public class Usuario implements Serializable {
 	
 @Id
 @Column(name = "IdUsuario")

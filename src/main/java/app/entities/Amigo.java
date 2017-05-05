@@ -1,6 +1,8 @@
 package app.entities;
 
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,7 +19,7 @@ import org.springframework.web.context.annotation.SessionScope;
 @Entity
 @SessionScope
 @Table(name = "AMIGO")
-public class Amigo {
+public class Amigo implements Serializable  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id")

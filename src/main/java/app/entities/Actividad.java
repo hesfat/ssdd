@@ -1,5 +1,6 @@
 package app.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import org.springframework.web.context.annotation.SessionScope;
 
 @Entity
 @SessionScope
-public class Actividad {
+public class Actividad implements Serializable  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;

@@ -21,12 +21,12 @@ public class DatabasesUsersLoaders {
 	
 	@PostConstruct
 	private void initDatabase(){	 	
-		Usuario user = (new Usuario("user", "Apellido 1", "pass", new Date(), "USER"));
+		Usuario user = (new Usuario("user", "Apellido 1", "pass", "harrlan@gmail.com", new Date(), "USER"));
 		ArrayList<Amigo> listAmigos = new ArrayList<Amigo>();
 		listAmigos.add(new Amigo(1,1));
 		listAmigos.add(new Amigo(1,2));
 		user.setAmigos(listAmigos);
 		userRepository.save(user);
-		userRepository.save(new Usuario("admin", "Apellido 2", "pass", new Date(), "USER", "ADMIN"));
+		userRepository.save(new Usuario("admin", "Apellido 2", "pass","harrlan@gmail.com", new Date(), "USER", "ADMIN"));
 	}
 }

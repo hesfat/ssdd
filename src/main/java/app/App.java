@@ -5,6 +5,9 @@ import java.util.Collections;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.session.hazelcast.config.annotation.web.http.EnableHazelcastHttpSession;
 
@@ -14,11 +17,14 @@ import com.hazelcast.config.JoinConfig;
 @EnableAutoConfiguration
 @SpringBootApplication
 @EnableHazelcastHttpSession
+@EnableCaching
 public class App {
 
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);
 	}
+	
+	
 	@Bean
 	 public Config config() {
 	 Config config = new Config();

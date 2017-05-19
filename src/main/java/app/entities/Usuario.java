@@ -35,6 +35,7 @@ private long id;
 private String nombre;
 private String apellidos;
 private String passwordHash;
+private String correo;
 private Date fechaAlta;
 
 @LazyCollection(LazyCollectionOption.FALSE)
@@ -56,12 +57,13 @@ public void setAmigos(List<Amigo> amigos) {
     this.amigos = amigos;
 }
 
-public Usuario(String nombre, String apellidos, String passwordHash, Date fechaAlta, String... roles) {
+public Usuario(String nombre, String apellidos, String passwordHash,String correo, Date fechaAlta, String... roles) {
 	BCryptPasswordEncoder Codificador = new  BCryptPasswordEncoder();
 	this.nombre = nombre;
 	this.apellidos = apellidos;
 	this.passwordHash = Codificador.encode(passwordHash);
 	this.fechaAlta = fechaAlta;
+	this.correo = correo;
 	this.roles = new ArrayList<>(Arrays.asList(roles));
 }
 
@@ -109,6 +111,14 @@ public void setPasswordHash(String password) {
 	//BCryptPasswordEncoder Codificador = new  BCryptPasswordEncoder();
 	//this.passwordHash = Codificador.encode(password);
 	this.passwordHash = password;
+}
+
+public String getCorreo() {
+	return correo;
+}
+
+public void setCorreo(String correo) {
+	this.correo = correo;
 }
 
 }
